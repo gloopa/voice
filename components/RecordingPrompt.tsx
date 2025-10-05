@@ -155,59 +155,61 @@ export default function RecordingPrompt({
   }
 
   return (
-    <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-      {/* Progress Bar */}
-      <div className="mb-6">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm font-medium text-gray-600">
-            Step {promptNumber} of {totalPrompts}
-          </span>
-          <span className="text-sm text-gray-500">{duration}</span>
+    <div className="relative max-w-2xl mx-auto">
+      <div className="absolute -inset-4 bg-gradient-to-br from-amber-50 to-transparent rounded-3xl opacity-50"></div>
+      <div className="relative bg-white rounded-3xl shadow-2xl p-8 border border-neutral-200">
+        {/* Progress Bar */}
+        <div className="mb-6">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm font-medium text-neutral-600">
+              Step {promptNumber} of {totalPrompts}
+            </span>
+            <span className="text-sm text-neutral-500">{duration}</span>
+          </div>
+          <div className="w-full bg-neutral-100 rounded-full h-2">
+            <div
+              className="bg-gradient-to-r from-amber-400 to-amber-600 h-2 rounded-full transition-all duration-300"
+              style={{ width: `${(promptNumber / totalPrompts) * 100}%` }}
+            />
+          </div>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
-          <div
-            className="bg-primary-400 h-2 rounded-full transition-all duration-300"
-            style={{ width: `${(promptNumber / totalPrompts) * 100}%` }}
-          />
+
+        {/* Title */}
+        <h2 className="text-3xl font-bold text-neutral-900 mb-4">{title}</h2>
+
+        {/* Description */}
+        <p className="text-xl text-neutral-700 mb-6">{description}</p>
+
+        {/* Reading Text */}
+        {readingText && (
+          <div className="bg-amber-50 border-l-4 border-amber-400 p-4 mb-6 rounded-xl">
+            <p className="text-neutral-800 leading-relaxed">{readingText}</p>
+          </div>
+        )}
+
+        {/* Phrases List */}
+        {phrases && (
+          <div className="bg-neutral-50 p-4 mb-6 rounded-xl border border-neutral-200">
+            <ul className="space-y-2">
+              {phrases.map((phrase, index) => (
+                <li key={index} className="flex items-center gap-2 text-neutral-800">
+                  <span className="text-amber-600">•</span>
+                  "{phrase}"
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Instruction */}
+        <div className="text-center mb-6">
+          <p className="text-neutral-600 italic mb-2">
+            Take your time. Speak naturally.
+          </p>
+          <p className="text-sm font-semibold text-amber-700">
+            ⏱️ Aim for 30-60 seconds per prompt for best quality!
+          </p>
         </div>
-      </div>
-
-      {/* Title */}
-      <h2 className="text-3xl font-bold text-gray-900 mb-4">{title}</h2>
-
-      {/* Description */}
-      <p className="text-xl text-gray-700 mb-6">{description}</p>
-
-      {/* Reading Text */}
-      {readingText && (
-        <div className="bg-gray-50 border-l-4 border-primary-400 p-4 mb-6 rounded">
-          <p className="text-gray-800 leading-relaxed">{readingText}</p>
-        </div>
-      )}
-
-      {/* Phrases List */}
-      {phrases && (
-        <div className="bg-gray-50 p-4 mb-6 rounded">
-          <ul className="space-y-2">
-            {phrases.map((phrase, index) => (
-              <li key={index} className="flex items-center gap-2 text-gray-800">
-                <span className="text-primary-400">•</span>
-                "{phrase}"
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* Instruction */}
-      <div className="text-center mb-6">
-        <p className="text-gray-600 italic mb-2">
-          Take your time. Speak naturally.
-        </p>
-        <p className="text-sm font-semibold text-blue-600">
-          ⏱️ Aim for 30-60 seconds per prompt for best quality!
-        </p>
-      </div>
 
       {/* Recording Interface */}
       <div className="text-center mb-6">
@@ -235,7 +237,7 @@ export default function RecordingPrompt({
         )}
 
         {audioBlob && !isRecording && (
-          <div className="mb-4 p-4 bg-green-50 rounded-lg">
+          <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-xl">
             <div className="flex items-center justify-center gap-2 text-green-600 mb-2">
               <Check className="w-5 h-5" />
               <span className="font-medium">Recording complete! ({formatTime(recordingTime)})</span>
@@ -251,7 +253,7 @@ export default function RecordingPrompt({
                 console.log('Audio blob type:', audioBlob.type)
               }}
             />
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-neutral-500 mt-1">
               {(audioBlob.size / 1024).toFixed(1)}KB • {audioBlob.type}
             </p>
           </div>
@@ -263,7 +265,7 @@ export default function RecordingPrompt({
         {!isRecording && !audioBlob && (
           <button
             onClick={startRecording}
-            className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition-all"
+            className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold px-8 py-3 rounded-xl shadow-lg transition-all"
           >
             <Mic className="w-5 h-5" />
             Start Recording
@@ -273,7 +275,7 @@ export default function RecordingPrompt({
         {isRecording && (
           <button
             onClick={stopRecording}
-            className="flex items-center gap-2 bg-gray-700 hover:bg-gray-800 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition-all"
+            className="flex items-center gap-2 bg-neutral-700 hover:bg-neutral-800 text-white font-semibold px-8 py-3 rounded-xl shadow-lg transition-all"
           >
             <Square className="w-5 h-5" />
             Stop Recording
@@ -284,20 +286,21 @@ export default function RecordingPrompt({
           <>
             <button
               onClick={reRecord}
-              className="flex items-center gap-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold px-6 py-3 rounded-full shadow-lg transition-all"
+              className="flex items-center gap-2 bg-neutral-500 hover:bg-neutral-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition-all"
             >
               <RotateCcw className="w-5 h-5" />
               Re-record
             </button>
             <button
               onClick={onNext}
-              className="flex items-center gap-2 bg-primary-400 hover:bg-primary-500 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition-all"
+              className="flex items-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-white font-semibold px-8 py-3 rounded-xl shadow-lg transition-all"
             >
               <Check className="w-5 h-5" />
               Continue
             </button>
           </>
         )}
+      </div>
       </div>
     </div>
   )

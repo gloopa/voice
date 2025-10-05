@@ -1,9 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createVoice } from '@/lib/elevenlabs'
+import { createServerSupabaseClient } from '@/lib/supabase-server'
 
 export async function POST(request: NextRequest) {
   try {
-    const { recordings } = await request.json()
+    const supabase = createServerSupabaseClient(request)
+    
+    // Get the authenticated user
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Please sign in to create a voice' },
+        { status: 401 }
+      )
+    }
+
+    const { recordings, voiceName } = await request.json()
 
     if (!recordings || !Array.isArray(recordings) || recordings.length === 0) {
       return NextResponse.json(
@@ -54,13 +67,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Create voice using ElevenLabs
-    const voiceName = `VoiceBank_${Date.now()}`
-    console.log(`Creating voice: ${voiceName}`)
+    const finalVoiceName = voiceName || `VoiceBank_${Date.now()}`
+    console.log(`Creating voice: ${finalVoiceName}`)
     
-    let voiceId: string
+    let elevenLabsVoiceId: string
     try {
-      voiceId = await createVoice(voiceName, audioFiles)
-      console.log(`Voice created successfully: ${voiceId}`)
+      elevenLabsVoiceId = await createVoice(finalVoiceName, audioFiles)
+      console.log(`Voice created successfully: ${elevenLabsVoiceId}`)
     } catch (error: any) {
       console.error('Voice cloning failed:', error)
       console.error('Error details:', error.message)
@@ -70,14 +83,33 @@ export async function POST(request: NextRequest) {
       throw new Error(`Voice cloning failed: ${error.message}. Please check your ElevenLabs API key and subscription tier. Voice cloning requires a paid ElevenLabs plan.`)
     }
 
-    // In a production app, you would:
-    // 1. Save to Supabase Storage
-    // 2. Store voice metadata in database
-    // 3. Associate with user account
+    // Save voice to database for long-term storage
+    // Note: recording_urls would ideally contain Supabase Storage URLs
+    // For now, we'll store empty array and can upload recordings later if needed
+    const { data: voiceData, error: dbError } = await supabase
+      .from('voices')
+      .insert({
+        user_id: user.id, // Associate with authenticated user from session
+        voice_id: elevenLabsVoiceId,
+        name: finalVoiceName,
+        recording_urls: [],
+        is_active: true,
+      })
+      .select()
+      .single()
+
+    if (dbError) {
+      console.error('Database error:', dbError)
+      // Don't fail the request if DB save fails - voice is already created in ElevenLabs
+      console.warn('Voice created in ElevenLabs but failed to save to database')
+    } else {
+      console.log('Voice saved to database:', voiceData)
+    }
 
     return NextResponse.json({
-      voiceId,
-      name: voiceName,
+      voiceId: elevenLabsVoiceId,
+      dbId: voiceData?.id,
+      name: finalVoiceName,
       message: 'Voice created successfully',
     })
   } catch (error) {

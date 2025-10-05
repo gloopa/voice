@@ -13,7 +13,7 @@ export default function VoicePlayer({ isPlaying, onPlay, disabled }: VoicePlayer
     <button
       onClick={onPlay}
       disabled={disabled || isPlaying}
-      className="flex items-center gap-2 bg-primary-400 hover:bg-primary-500 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold px-8 py-4 rounded-full shadow-lg transition-all"
+      className="flex items-center gap-2 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white font-semibold px-8 py-4 rounded-xl shadow-lg transition-all"
     >
       {isPlaying ? (
         <>
