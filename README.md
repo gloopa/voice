@@ -1,8 +1,8 @@
 # 🎙️ VoiceU - Preserve Your Voice Forever
 
-**Simple. Free. 15 minutes.**
+**Simple. Free. 5 minutes.**
 
-VoiceU helps people facing voice loss (due to ALS, cancer, stroke, or progressive diseases) preserve their unique voice using advanced AI technology. What used to cost $3,000+ and take months is now free and takes just 15 minutes.
+VoiceU helps people facing voice loss (due to ALS, cancer, stroke, or progressive diseases) preserve their unique voice using advanced AI technology. What used to cost $3,000+ and take months is now free and takes just 5 minutes.
 
 
 ## 🛠️ Tech Stack

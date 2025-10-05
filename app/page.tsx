@@ -32,7 +32,7 @@ export default function HomePage() {
 
             {/* Subheadline */}
             <p className="text-xl md:text-2xl text-neutral-700 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Professional voice banking for everyone. Free, private, and ready in 15 minutes.
+              Professional voice banking for everyone. Free, private, and ready in 5 minutes.
             </p>
 
             {/* CTA */}
@@ -66,7 +66,7 @@ export default function HomePage() {
               </div>
               <div className="hidden sm:block w-px h-12 bg-neutral-200"></div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-neutral-900">15 min</div>
+                <div className="text-3xl font-bold text-neutral-900">5 min</div>
                 <div className="text-sm text-neutral-600 mt-1">To preserve your voice</div>
               </div>
               <div className="hidden sm:block w-px h-12 bg-neutral-200"></div>
@@ -102,7 +102,7 @@ export default function HomePage() {
                   Record your voice
                 </h3>
                 <p className="text-lg text-neutral-600 leading-relaxed">
-                  Read 8 simple prompts out loud. Takes just 5 minutes. No special equipment needed.
+                  Read 8 simple prompts out loud. Takes just 2-4 minutes. No special equipment needed.
                 </p>
               </div>
             </div>
@@ -231,7 +231,7 @@ export default function HomePage() {
                 Ready to preserve your voice?
               </h2>
               <p className="text-xl text-neutral-300 mb-10 max-w-2xl mx-auto">
-                It only takes 15 minutes, and it's completely free. Start today and give your family the gift of your voice.
+                It only takes 5 minutes, and it's completely free. Start today and give your family the gift of your voice.
               </p>
               <Button 
                 asChild 

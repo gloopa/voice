@@ -122,10 +122,10 @@ export default function RecordingPrompt({
       console.log('Stop recording clicked. Current time from ref:', currentTime)
       console.log('State recordingTime:', recordingTime)
       
-      // Check minimum recording length (30 seconds for quality)
-      if (currentTime < 30) {
+      // Check minimum recording length (15 seconds for quality)
+      if (currentTime < 15) {
         const shouldContinue = window.confirm(
-          `For best voice quality, we recommend recording for at least 30 seconds.\n\n` +
+          `For best voice quality, we recommend recording for at least 15 seconds.\n\n` +
           `You've recorded ${currentTime} seconds.\n\n` +
           `Continue recording for better results?`
         )
@@ -207,7 +207,7 @@ export default function RecordingPrompt({
             Take your time. Speak naturally.
           </p>
           <p className="text-sm font-semibold text-amber-700">
-            ⏱️ Aim for 30-60 seconds per prompt for best quality!
+            ⏱️ Aim for 15-30 seconds per prompt for best quality!
           </p>
         </div>
 
@@ -220,16 +220,16 @@ export default function RecordingPrompt({
               <span className="text-lg font-medium">Recording... ({formatTime(recordingTime)})</span>
             </div>
             {/* Quality indicator */}
-            {recordingTime < 20 && (
-              <p className="text-sm text-orange-600 mb-2">Keep going... (aim for 30+ seconds)</p>
+            {recordingTime < 10 && (
+              <p className="text-sm text-orange-600 mb-2">Keep going... (aim for 15+ seconds)</p>
             )}
-            {recordingTime >= 20 && recordingTime < 30 && (
-              <p className="text-sm text-yellow-600 mb-2">Good! (30+ seconds recommended)</p>
+            {recordingTime >= 10 && recordingTime < 15 && (
+              <p className="text-sm text-yellow-600 mb-2">Good! (15+ seconds recommended)</p>
             )}
-            {recordingTime >= 30 && recordingTime < 45 && (
+            {recordingTime >= 15 && recordingTime < 25 && (
               <p className="text-sm text-green-600 mb-2">✓ Great quality!</p>
             )}
-            {recordingTime >= 45 && (
+            {recordingTime >= 25 && (
               <p className="text-sm text-green-700 font-semibold mb-2">✓✓ Excellent quality!</p>
             )}
             <WaveformVisualizer stream={stream} />

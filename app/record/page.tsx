@@ -181,11 +181,11 @@ export default function RecordPage() {
                   <h3 className="font-semibold text-neutral-900 text-lg mb-3">Recording Tips for Maximum Quality</h3>
                   <ul className="text-neutral-700 space-y-2 leading-relaxed">
                     <li>• <strong>Find a QUIET space</strong> - No background noise (critical!)</li>
-                    <li>• <strong>Record 30-60 seconds per prompt</strong> - Longer = better quality</li>
+                    <li>• <strong>Record 15-30 seconds per prompt</strong> - Longer = better quality</li>
                     <li>• <strong>Position yourself 6-12 inches from microphone</strong></li>
                     <li>• <strong>Speak naturally with emotion</strong> - Don't read in monotone</li>
                     <li>• <strong>Listen to each recording</strong> - Re-record if there's noise</li>
-                    <li>• ⏱️ Total recording time: Aim for 8-12 minutes across all prompts</li>
+                    <li>• ⏱️ Total recording time: Aim for 2-4 minutes across all prompts</li>
                   </ul>
                 </div>
               </div>
